@@ -2,10 +2,17 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { PropsWithChildren } from "react";
 
-export const MainLayout = ({ children }: PropsWithChildren) => {
+type MainLayout = {
+  isLogged?: boolean;
+};
+
+export const MainLayout = ({
+  isLogged,
+  children,
+}: PropsWithChildren<MainLayout>) => {
   return (
     <main className="flex flex-col justify-between min-h-screen scrollbar-w-2 scrollbar scrollbar-track-background scrollbar-thumb-secondary-foreground overflow-y-scroll scrollbar-thumb-rounded-md">
-      <Header />
+      <Header isLogged={isLogged} />
       {children}
 
       <Footer />
