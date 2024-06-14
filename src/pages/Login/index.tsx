@@ -21,7 +21,7 @@ export const Login = () => {
           <Button variant="secondary" className="mt-4 w-48">
             Entrar
           </Button>
-          <a className="text-green-500 underline cursor-pointer hover:opacity-70 transition-opacity">
+          <a className="text-green-500 text-xs underline cursor-pointer hover:opacity-70 transition-opacity">
             Não possui uma conta? Registre-se
           </a>
         </div>
