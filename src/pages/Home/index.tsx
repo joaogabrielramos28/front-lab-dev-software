@@ -5,11 +5,20 @@ import { Sheet } from "@/components/ui/sheet";
 import { Fab } from "./components/Fab";
 
 import { SheetPassword } from "./components/Sheet";
+import { useEffect } from "react";
 
 export const Home = () => {
-  const { passwords, handleCopyPassword } = useHomeController();
+  const { passwords, handleCopyPassword, auth, handleLogout } =
+    useHomeController();
+
+  useEffect(() => {
+    if (!auth) {
+      window.location.href = "/";
+    }
+  }, [auth]);
+
   return (
-    <MainLayout isLogged>
+    <MainLayout isLogged handleLogout={handleLogout}>
       <Sheet>
         <section className="text-start">
           <div className="container flex flex-col gap-4 max-w-[820px]">

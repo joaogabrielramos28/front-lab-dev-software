@@ -4,8 +4,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useToast } from "@/components/ui/use-toast";
 import { Service } from "@/services";
 import { useNavigate } from "react-router-dom";
+import { StorageKeys, useLocalStorage } from "@/hooks/useLocalStorage";
 
 export const useRegisterController = () => {
+  const { setItem } = useLocalStorage();
   const service = new Service();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -22,11 +24,20 @@ export const useRegisterController = () => {
 
   const handleRegister = async (data: RegisterSchemaType) => {
     try {
-      await service.CreateAccount({
+      const response = await service.CreateAccount({
         email: data.email,
         name: data.name,
         password: data.password,
       });
+
+      setItem(
+        StorageKeys.USER,
+        JSON.stringify({
+          codcli: response.codcli,
+          name: response.name,
+          isAdmin: response.is_admin,
+        })
+      );
 
       navigate("/home");
     } catch (e) {

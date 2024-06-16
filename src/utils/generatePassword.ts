@@ -1,4 +1,4 @@
-export const generateStrongPassword = (length: number): string => {
+export const generatePassword = (length: number): string => {
   const upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
   const numbers = "0123456789";
