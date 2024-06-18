@@ -8,7 +8,7 @@ type HeaderProps = {
 
 export const Header = ({ isLogged, handleLogout }: HeaderProps) => {
   return (
-    <header className="w-screen flex  p-6">
+    <header className="w-screen flex p-6">
       <nav className="w-full flex justify-between">
         <a href={!isLogged ? "/" : "/home"}>
           <div className="text-3xl whitespace-nowrap text-white cursor-pointer">

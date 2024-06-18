@@ -30,12 +30,23 @@ type DeletePasswordsParams = {
   codPass: number;
 };
 
+type DeleteAccountParams = {
+  codcli: number;
+};
+
 type CreateAccountResponse = {
   email: string;
   password: string;
   codcli: number;
   name: string;
   is_admin: boolean;
+};
+
+export type GetPasswordsResponse = {
+  codcli: number;
+  id_position: number;
+  name: string;
+  password: string;
 };
 
 export class Service {
@@ -46,6 +57,7 @@ export class Service {
     postPass: "/user/post_position",
     putPass: "/user/put_position",
     deletePass: "/user/delete_position",
+    deleteAccount: "/user/delete_my_account",
   };
 
   async CreateAccount(
@@ -85,7 +97,9 @@ export class Service {
     const data = await response.json();
     return data;
   }
-  async GetPasswords({ codcli }: GetPasswordsParams) {
+  async GetPasswords({
+    codcli,
+  }: GetPasswordsParams): Promise<GetPasswordsResponse[]> {
     const response = await fetch(`${URL}${this.route.getPass}/${codcli}`, {
       method: "GET",
       headers: {
@@ -107,7 +121,7 @@ export class Service {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(params),
+      body: JSON.stringify({ ...params, key: "" }),
     });
     if (!response.ok) {
       const errorData = await response.json();
@@ -146,6 +160,25 @@ export class Service {
         "Content-Type": "application/json",
       },
     });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.detail || "An error occurred");
+    }
+
+    const data = await response.json();
+    return data;
+  }
+
+  async DeleteAccount({ codcli }: DeleteAccountParams) {
+    const response = await fetch(
+      `${URL}${this.route.deleteAccount}/${codcli}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.detail || "An error occurred");

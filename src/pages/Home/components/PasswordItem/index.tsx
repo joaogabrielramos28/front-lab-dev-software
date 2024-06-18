@@ -1,5 +1,14 @@
+import {
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { SheetTrigger } from "@/components/ui/sheet";
 import { Copy, PencilSimple, TrashSimple } from "@phosphor-icons/react";
 
 type PasswordItemProps = {
@@ -23,16 +32,16 @@ export const PasswordItem = ({
       onClick: onCopy,
     },
     {
-      icon: (
-        <SheetTrigger asChild>
-          <PencilSimple size={24} weight="fill" color="white" />
-        </SheetTrigger>
-      ),
-      onClick: onDelete,
+      icon: <PencilSimple size={24} weight="fill" color="white" />,
+      onClick: onEdit,
     },
     {
-      icon: <TrashSimple size={24} weight="fill" color="white" />,
-      onClick: onEdit,
+      icon: (
+        <AlertDialogTrigger>
+          <TrashSimple size={24} weight="fill" color="white" />
+        </AlertDialogTrigger>
+      ),
+      onClick: () => {},
     },
   ];
   return (
@@ -53,6 +62,21 @@ export const PasswordItem = ({
           </Button>
         ))}
       </div>
+
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            Tem certeza que deseja apagar sua senha?
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            Ao apagar sua senha, você não poderá recuperá-la.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+          <AlertDialogAction onClick={onDelete}>Apagar</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
     </div>
   );
 };
