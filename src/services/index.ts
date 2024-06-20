@@ -15,15 +15,15 @@ type GetPasswordsParams = {
 };
 type PostPasswordsParams = {
   codcli: number;
-  name: string;
-  email: string;
+  service_name: string;
+  service_email: string;
   password: string;
 };
 type PutPasswordsParams = {
   codPass: number;
   codcli: number;
-  name: string;
-  email: string;
+  service_name: string;
+  service_email: string;
   password: string;
 };
 type DeletePasswordsParams = {
@@ -45,7 +45,8 @@ type CreateAccountResponse = {
 export type GetPasswordsResponse = {
   codcli: number;
   id_position: number;
-  name: string;
+  service_name: string;
+  service_email: string;
   password: string;
 };
 
@@ -80,15 +81,13 @@ export class Service {
   }
 
   async Login({ email, password }: LoginParams) {
-    const response = await fetch(
-      `${URL}${this.route.login}/${email}/${password}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`${URL}${this.route.login}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.detail || "An error occurred");
@@ -110,7 +109,7 @@ export class Service {
       const errorData = await response.json();
       throw new Error(errorData.detail || "An error occurred");
     }
-
+    if (response.status === 204) return [];
     const data = await response.json();
     return data;
   }
@@ -134,8 +133,8 @@ export class Service {
   async UpdatePasswords({
     codPass,
     codcli,
-    email,
-    name,
+    service_email,
+    service_name,
     password,
   }: PutPasswordsParams) {
     const response = await fetch(`${URL}${this.route.putPass}/${codPass}`, {
@@ -143,7 +142,7 @@ export class Service {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ codcli, email, name, password }),
+      body: JSON.stringify({ codcli, service_email, service_name, password }),
     });
     if (!response.ok) {
       const errorData = await response.json();

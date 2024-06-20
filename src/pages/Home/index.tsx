@@ -59,8 +59,8 @@ export const Home = () => {
                   {passwords.map((item) => (
                     <PasswordItem
                       key={item.id_position}
-                      email={item.name}
-                      title={item.name}
+                      email={item.service_email}
+                      title={item.service_name}
                       onCopy={() => handleCopyPassword(item.password)}
                       onDelete={() => handleDeletePass(item.id_position)}
                       onEdit={() => {

@@ -30,8 +30,8 @@ export const useSheetController = ({
     try {
       await service.CreatePasswords({
         codcli: auth?.codcli || 0,
-        email,
-        name,
+        service_email: email,
+        service_name: name,
         password,
       });
       reset();
@@ -48,8 +48,8 @@ export const useSheetController = ({
       await service.UpdatePasswords({
         codPass: editingPassword.id_position,
         codcli: auth?.codcli || 0,
-        email,
-        name,
+        service_email: email,
+        service_name: name,
         password,
       });
       reset();
@@ -69,7 +69,8 @@ export const useSheetController = ({
 
   useEffect(() => {
     if (editingPassword) {
-      setValue("name", editingPassword.name);
+      setValue("name", editingPassword.service_name);
+      setValue("email", editingPassword.service_email);
       setValue("password", editingPassword.password);
     }
   }, [editingPassword]);
