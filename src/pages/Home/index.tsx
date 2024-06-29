@@ -76,6 +76,11 @@ export const Home = () => {
                   </Button>
                 </>
               )}
+              {passwords.length === 0 && (
+                <Button variant="destructive" onClick={handleToggleDeleteModal}>
+                  Deletar conta
+                </Button>
+              )}
             </div>
           </div>
         </section>
